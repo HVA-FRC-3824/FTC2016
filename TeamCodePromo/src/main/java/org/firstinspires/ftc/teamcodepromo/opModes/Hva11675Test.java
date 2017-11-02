@@ -30,11 +30,13 @@ CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR
 TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF
 THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
-package org.firstinspires.ftc.teamcode;
+package org.firstinspires.ftc.teamcodepromo.opModes;
 
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.util.Range;
+import org.firstinspires.ftc.teamcodepromo.hardwareDefinition.*;
+import org.firstinspires.ftc.teamcodepromo.systems.*;
 
 /**
  * This file provides basic Telop driving for a Pushbot robot.
@@ -102,31 +104,26 @@ public class Hva11675Test extends OpMode{
         robot.leftMotor.setPower(left);
         robot.rightMotor.setPower(right);
 
-        // Use gamepad left & right Bumpers to open and close the fingers
+        // Use gamepad right Bumpers toggles finger open/closed
         if (gamepad1.right_bumper)
-            clawOffset += CLAW_SPEED;
-        else if (gamepad1.left_bumper)
-            clawOffset -= CLAW_SPEED;
+            finger.togglePositionOpen();
 
-        // Move both servos to new position.  Assume servos are mirror image of each other.
-        clawOffset = Range.clip(clawOffset, -0.5, 0.5);
-        robot.leftFinger.setPosition(robot.MID_SERVO + clawOffset);
-        robot.rightFinger.setPosition(robot.MID_SERVO - clawOffset);
+//         Use gamepad buttons to move the arm up (Y) and down (A)
+//        if (gamepad2.y)
+//            robot.armMotor.setPower(robot.ARM_UP_POWER);
+//        else if (gamepad2.a)
+//            robot.armMotor.setPower(robot.ARM_DOWN_POWER);
+//        else
+//            robot.armMotor.setPower(0.0);
 
-        // Use gamepad buttons to move the arm up (Y) and down (A)
-        //if (gamepad2.y)
-        //    robot.armMotor.setPower(robot.ARM_UP_POWER);
-        //else if (gamepad2.a)
-        //    robot.armMotor.setPower(robot.ARM_DOWN_POWER);
-        //else
-        //    robot.armMotor.setPower(0.0);
-        if (gamepad1.y)
-            robot.armMotor.setPower(robot.ARM_UP_POWER);
-        else if (gamepad1.x)
-            robot.armMotor.setPower(robot.ARM_DOWN_POWER);
-        else
-            robot.armMotor.setPower(0.0);
+//        if (gamepad1.y)
+//            robot.armMotor.setPower(robot.ARM_UP_POWER);
+//        else if (gamepad1.x)
+//            robot.armMotor.setPower(robot.ARM_DOWN_POWER);
+//        else
+//            robot.armMotor.setPower(0.0);
 
+        // gamepad1 A  INTAKE IN, B INTAKE OUT
         if (gamepad1.a)
             robot.intakeMotor.setPower(robot.INTAKE_IN_POWER);
         else if (gamepad1.b)
@@ -135,7 +132,7 @@ public class Hva11675Test extends OpMode{
             robot.intakeMotor.setPower(0.0);
 
         // Send telemetry message to signify robot running;
-        telemetry.addData("finger",  "Servo Left Pos = %.2f, Servo Right Pos = %.2f", robot.leftFinger.getPosition(), robot.rightFinger.getPosition());
+        telemetry.addData("finger",  "Servo Left Pos = %.2f, Servo Right Pos = %.2f", finger.getLeftPosition(), finger.getRightPosition());
         telemetry.addData("left",  "%.2f", left);
         telemetry.addData("right", "%.2f", right);
     }

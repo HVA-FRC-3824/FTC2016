@@ -64,7 +64,6 @@ public class HvaSensorMROpticalDistance extends LinearOpMode {
       // send the info back to driver station using telemetry function.
       telemetry.addData("Raw",    odsSensor.getRawLightDetected());
       telemetry.addData("Normal", odsSensor.getLightDetected());
-      telemetry.addData("Distance", odsSensor.get());
 
       telemetry.update();
     }
