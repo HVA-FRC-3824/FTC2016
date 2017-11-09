@@ -34,7 +34,7 @@ package org.firstinspires.ftc.teamcodepromo.opModes;
 
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
-import com.qualcomm.robotcore.util.Range;
+
 import org.firstinspires.ftc.teamcodepromo.hardwareDefinition.*;
 import org.firstinspires.ftc.teamcodepromo.systems.*;
 
@@ -59,7 +59,9 @@ public class Hva11675Test extends OpMode{
 
     /* Declare OpMode members. */
     HvaHardwarePushbot robot       = new HvaHardwarePushbot(); // use the class created to define a Pushbot's hardware
-    Finger finger;
+    Gripper gripper = null;
+    Drive drive = null;
+
     /*
      * Code to run ONCE when the driver hits INIT
      */
@@ -70,7 +72,8 @@ public class Hva11675Test extends OpMode{
          */
         robot.init(hardwareMap);
 
-        finger = new Finger(robot);
+        gripper = new Gripper(robot);
+        drive = new Drive(robot);
 
         // Send telemetry message to signify robot waiting
         telemetry.addData("Say", "Hello Mister Ben");    //
@@ -95,20 +98,31 @@ public class Hva11675Test extends OpMode{
      */
     @Override
     public void loop() {
-        double left;
-        double right;
+        double left = 0;
+        double right = 0;
 
-        // Run wheels in tank mode (note: The joystick goes negative when pushed forwards, so negate it)
-        left = -gamepad1.left_stick_y;
-        right = -gamepad1.right_stick_y;
-        robot.leftMotor.setPower(left);
-        robot.rightMotor.setPower(right);
 
         // Use gamepad right Bumpers toggles finger open/closed
         if (gamepad1.right_bumper)
-            finger.togglePositionOpen();
+            gripper.togglePositionOpen();
 
-//         Use gamepad buttons to move the arm up (Y) and down (A)
+        // The gripper will automatically close if needed (i.e. if the touch sensor is active)
+        gripper.update();
+
+        if(gamepad1.dpad_right){
+            drive.circle(Drive.Direction.CW);
+        }
+        else if(gamepad1.dpad_left){
+            drive.circle(Drive.Direction.CCW);
+        }
+        else{
+            // Run wheels in tank mode (note: The joystick goes negative when pushed forwards, so negate it)
+            left = -gamepad1.left_stick_y;
+            right = -gamepad1.right_stick_y;
+            drive.tank(left, right);
+        }
+
+        // Use gamepad buttons to move the arm up (Y) and down (A)
 //        if (gamepad2.y)
 //            robot.armMotor.setPower(robot.ARM_UP_POWER);
 //        else if (gamepad2.a)
@@ -116,15 +130,16 @@ public class Hva11675Test extends OpMode{
 //        else
 //            robot.armMotor.setPower(0.0);
 
-//        if (gamepad1.y)
-//            robot.armMotor.setPower(robot.ARM_UP_POWER);
-//        else if (gamepad1.x)
-//            robot.armMotor.setPower(robot.ARM_DOWN_POWER);
-//        else
-//            robot.armMotor.setPower(0.0);
+        // Use gamepad buttons Y(up) and A(down)
+        if (gamepad1.y)
+            robot.armMotor.setPower(robot.ARM_UP_POWER);
+        else if (gamepad1.a)
+            robot.armMotor.setPower(robot.ARM_DOWN_POWER);
+        else
+            robot.armMotor.setPower(0.0);
 
-        // gamepad1 A  INTAKE IN, B INTAKE OUT
-        if (gamepad1.a)
+        // gamepad1 buttons X(in) and B(out)
+        if (gamepad1.x)
             robot.intakeMotor.setPower(robot.INTAKE_IN_POWER);
         else if (gamepad1.b)
             robot.intakeMotor.setPower(robot.INTAKE_OUT_POWER);
@@ -132,7 +147,7 @@ public class Hva11675Test extends OpMode{
             robot.intakeMotor.setPower(0.0);
 
         // Send telemetry message to signify robot running;
-        telemetry.addData("finger",  "Servo Left Pos = %.2f, Servo Right Pos = %.2f", finger.getLeftPosition(), finger.getRightPosition());
+        telemetry.addData("finger",  "Servo Left Pos = %.2f, Servo Right Pos = %.2f", gripper.getLeftPosition(), gripper.getRightPosition());
         telemetry.addData("left",  "%.2f", left);
         telemetry.addData("right", "%.2f", right);
     }

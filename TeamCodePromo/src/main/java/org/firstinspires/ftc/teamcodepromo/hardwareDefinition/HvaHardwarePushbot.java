@@ -3,6 +3,7 @@ package org.firstinspires.ftc.teamcodepromo.hardwareDefinition;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.hardware.Servo;
+import com.qualcomm.robotcore.hardware.TouchSensor;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
 /**
@@ -31,6 +32,8 @@ public class HvaHardwarePushbot
     public DcMotor  armMotor     = null;
     public Servo    leftFinger   = null;
     public Servo    rightFinger  = null;
+
+    public TouchSensor touchSensor = null;
 
     /**
      * Constant limits
@@ -62,6 +65,9 @@ public class HvaHardwarePushbot
     public void init(HardwareMap ahwMap) {
         // Save reference to Hardware map
         hwMap = ahwMap;
+
+        // Define and initialize the sensors
+        touchSensor = hwMap.touchSensor.get("sensor_touch");
 
         // Define and Initialize Motors
         leftMotor    = hwMap.dcMotor.get("leftMotor");
