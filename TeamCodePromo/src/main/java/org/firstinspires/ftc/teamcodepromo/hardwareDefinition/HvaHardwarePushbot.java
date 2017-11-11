@@ -46,11 +46,11 @@ public class HvaHardwarePushbot
     public static final double INTAKE_IN_POWER   =  0.45 ;
     public static final double INTAKE_OUT_POWER  = -0.45 ;
 
-    public static final double LEFT_FINGER_OPEN  = 0.2 ;
-    public static final double LEFT_FINGER_CLOSED  = 0.0 ;
+    public static final double LEFT_FINGER_OPEN  = 0.55 ;
+    public static final double LEFT_FINGER_CLOSED  = 0.3 ;
 
-    public static final double RIGHT_FINGER_OPEN  = 0.2 ;
-    public static final double RIGHT_FINGER_CLOSED  = 0.0 ;
+    public static final double RIGHT_FINGER_OPEN  = 0.3 ;
+    public static final double RIGHT_FINGER_CLOSED  = 0.65 ;
 
     /* local OpMode members. */
     HardwareMap hwMap           =  null;
