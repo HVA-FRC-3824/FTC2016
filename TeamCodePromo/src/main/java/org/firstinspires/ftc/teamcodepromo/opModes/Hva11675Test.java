@@ -53,7 +53,7 @@ import org.firstinspires.ftc.teamcodepromo.systems.*;
  * Remove or comment out the @Disabled line to add this opmode to the Driver Station OpMode list
  */
 
-@TeleOp(name="HVA Teleop Tank", group="HVA")
+@TeleOp(name="HVA Promo Teleop Tank", group="HVA")
 
 public class Hva11675Test extends OpMode{
 

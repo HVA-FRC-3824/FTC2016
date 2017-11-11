@@ -45,7 +45,7 @@ import org.firstinspires.ftc.teamcodepromo.hardwareDefinition.HvaHardwarePushbot
  * Use Android Studio to Copy this Class, and Paste it into your team's code folder with a new name.
  * Remove or comment out the @Disabled line to add this opmode to the Driver Station OpMode list
  */
-@TeleOp(name = "Sensor: MR ODS", group = "Sensor")
+@TeleOp(name = "Test - Sensor: MR ODS", group = "Sensor")
 public class HvaSensorMROpticalDistance extends LinearOpMode {
 
   OpticalDistanceSensor odsSensor;  // Hardware Device Object

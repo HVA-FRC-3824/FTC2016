@@ -54,7 +54,7 @@ import org.firstinspires.ftc.teamcodepromo.hardwareDefinition.HvaHardwarePushbot
  * Remove or comment out the @Disabled line to add this opmode to the Driver Station OpMode list
  */
 
-@TeleOp(name="Pushbot: Teleop POV", group="Pushbot")
+@TeleOp(name="Test - Pushbot: Teleop POV", group="Pushbot")
 
 public class PushbotTeleopPOV_Linear extends LinearOpMode {
 

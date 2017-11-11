@@ -66,7 +66,7 @@ import org.firstinspires.ftc.teamcodepromo.hardwareDefinition.HvaHardwarePushbot
  * Remove or comment out the @Disabled line to add this opmode to the Driver Station OpMode list
  */
 
-@Autonomous(name="HVA Auto Drive By Encoder", group="HVA")
+@Autonomous(name="Test - HVA Auto Drive By Encoder", group="HVA")
 
 public class HVAbotAutoDriveByEncoder_Linear extends LinearOpMode {
 
