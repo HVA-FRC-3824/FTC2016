@@ -33,7 +33,7 @@ public class HvaHardwarePushbot
     public Servo    leftFinger   = null;
     public Servo    rightFinger  = null;
 
-    public TouchSensor touchSensor = null;
+    // public TouchSensor touchSensor = null;
 
     /**
      * Constant limits
@@ -67,7 +67,7 @@ public class HvaHardwarePushbot
         hwMap = ahwMap;
 
         // Define and initialize the sensors
-        touchSensor = hwMap.touchSensor.get("sensor_touch");
+        //touchSensor = hwMap.touchSensor.get("sensorTouch");
 
         // Define and Initialize Motors
         leftMotor    = hwMap.dcMotor.get("leftMotor");

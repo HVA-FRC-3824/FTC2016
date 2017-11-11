@@ -72,7 +72,7 @@ public class Hva11675Test extends OpMode{
          */
         robot.init(hardwareMap);
 
-        gripper = new Gripper(robot);
+        gripper = new Gripper(robot, gamepad1);
         drive = new Drive(robot);
 
         // Send telemetry message to signify robot waiting
@@ -102,13 +102,6 @@ public class Hva11675Test extends OpMode{
         double right = 0;
 
 
-        // Use gamepad right Bumpers toggles finger open/closed
-        if (gamepad1.right_bumper)
-            gripper.togglePositionOpen();
-
-        // The gripper will automatically close if needed (i.e. if the touch sensor is active)
-        gripper.update();
-
         if(gamepad1.dpad_right){
             drive.circle(Drive.Direction.CW);
         }
@@ -116,20 +109,16 @@ public class Hva11675Test extends OpMode{
             drive.circle(Drive.Direction.CCW);
         }
         else{
-            // Run wheels in tank mode (note: The joystick goes negative when pushed forwards, so negate it)
-            left = -gamepad1.left_stick_y;
-            right = -gamepad1.right_stick_y;
+            // Run wheels in tank mode
+            left = gamepad1.left_stick_y;
+            right = gamepad1.right_stick_y;
             drive.tank(left, right);
         }
 
-        // Use gamepad buttons to move the arm up (Y) and down (A)
-//        if (gamepad2.y)
-//            robot.armMotor.setPower(robot.ARM_UP_POWER);
-//        else if (gamepad2.a)
-//            robot.armMotor.setPower(robot.ARM_DOWN_POWER);
-//        else
-//            robot.armMotor.setPower(0.0);
 
+        //--------------------------------------------
+        // ARM control - UP / DOWN
+        //
         // Use gamepad buttons Y(up) and A(down)
         if (gamepad1.y)
             robot.armMotor.setPower(robot.ARM_UP_POWER);
@@ -138,6 +127,17 @@ public class Hva11675Test extends OpMode{
         else
             robot.armMotor.setPower(0.0);
 
+
+        //--------------------------------------------
+        // GRIPPER control - OPEN / CLOSE
+        //
+        // Use gamepad right Bumpers toggles finger open/closed
+        // The gripper will automatically close if needed (i.e. if the touch sensor is active)
+        gripper.update();
+
+        //--------------------------------------------
+        // INTAKE control - IN / OUT
+        //
         // gamepad1 buttons X(in) and B(out)
         if (gamepad1.x)
             robot.intakeMotor.setPower(robot.INTAKE_IN_POWER);

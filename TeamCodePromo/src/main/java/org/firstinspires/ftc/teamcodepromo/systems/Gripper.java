@@ -1,5 +1,6 @@
 package org.firstinspires.ftc.teamcodepromo.systems;
 
+import com.qualcomm.robotcore.hardware.Gamepad;
 import com.qualcomm.robotcore.hardware.TouchSensor;
 
 import org.firstinspires.ftc.teamcodepromo.hardwareDefinition.HvaHardwarePushbot;
@@ -8,10 +9,15 @@ public class Gripper {
 
     private HvaHardwarePushbot bot;
     private boolean positionOpen;
-    private TouchSensor touchSensor;  // Hardware Device Object
+    private boolean pressed;
+    private Gamepad gamepad;
+    // private TouchSensor touchSensor;  // Hardware Device Object
 
-    public Gripper(HvaHardwarePushbot ourBot){
+    public Gripper(HvaHardwarePushbot ourBot, Gamepad pad){
         bot = ourBot;
+        gamepad = pad;
+        pressed = false;
+        setStartPosition();
     }
 
     public void setStartPosition(){
@@ -32,12 +38,25 @@ public class Gripper {
     }
 
     public void update(){
-        // if the touch sensor detects a block, then close the gripper
-        if(bot.touchSensor.isPressed()){
-            setPositionOpen(false);
+
+        // if button is JUST pressed
+        if (gamepad.right_bumper && !pressed)
+        {
+            togglePositionOpen();
+            pressed = true;
         }
-        else{
-            setPositionOpen(true);
+        // if button is NOT pressed
+        else if (!gamepad.right_bumper)
+        {
+            pressed = false;
+
+            // if the touch sensor detects a block, then close the gripper
+//            if(bot.touchSensor.isPressed()){
+//                setPositionOpen(false);
+//            }
+//            else{
+//                setPositionOpen(true);
+//            }
         }
     }
 
@@ -54,6 +73,6 @@ public class Gripper {
     }
 
     public double getRightPosition(){
-        return bot.leftFinger.getPosition();
+        return bot.rightFinger.getPosition();
     }
 }
